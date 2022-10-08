@@ -1,3 +1,5 @@
+#### Not actually used because Gurobi is *stupid* ####
+
 from fileinput import close
 from numpy import random
 import pandas as pd
@@ -84,6 +86,7 @@ def make_gurobi_model(list_of_cities):
                                 if vals[i, j] > 0.5)
             # find the shortest cycle in the selected edge list
             tour = subtour(selected)
+            print(tour)
             if len(tour) < len(list_of_cities):
                 # add subtour elimination constr. for every pair of cities in subtour
                 model.cbLazy(gp.quicksum(model._vars[i, j] for i, j in combinations(tour, 2))
@@ -120,15 +123,29 @@ def make_gurobi_model(list_of_cities):
 
     #check if it worked 
     tour = subtour(selected)
-    assert len(tour) <= len(list_of_cities)
+    #assert len(tour) == len(list_of_cities)
 
-    return m
+    return {'model':m, 'vars':vars}
 
 #so I'm not gonna lie I have no clue why Gurobi has two solutions
 #Gurobi's "optimal" solution is often shorter than a single edge in the mandatory tour
-#The hueristic solution is much more sensible so I grab that one instead
-def get_gurobi_solution(model):
-    model.params.SolutionNumber = 1
-    return model.PoolObjVal
+#The hueristic solution is way too high though. So I'm grabbing both.
+def get_gurobi_tour_length(model):
+    return model.ObjVal
+
+#stupid gurobi nonsense :)
+def get_gurobi_tour(vars):
+    edge_list = vars.select('*', '*')
+    route = []
+    for edge in edge_list:
+        if edge.x > 0.5:
+            edge_name = edge.VarName
+            edge_name = edge_name[edge_name.find('[')+1 : edge_name.find(']')]
+            split_point = edge_name.find(',')+4
+            start_node = edge_name[0:split_point]
+            end_node = edge_name[split_point+1:]
+            route.append((start_node, end_node))
+    
+    return route
 
 
