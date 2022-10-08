@@ -54,7 +54,7 @@ Brattleboro, VT
 Bridgeport, CT
 Brockton, MA
 Buffalo, NY
-Burlington, ONT
+Burlington, ON
 Burlington, VT
 Butte, MT
 Calgary, AB
@@ -190,7 +190,7 @@ Muncie, IN
 Nashville, TN
 Natchez, MS
 Newark, NJ
-New Britain,CT
+New Britain, CT
 New Haven, CT
 New Orleans, LA
 New York, NY

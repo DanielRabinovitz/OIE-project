@@ -1,3 +1,5 @@
+#### DEPRECATED, source of gurobiTSP.py ####
+
 from fileinput import close
 import pandas as pd
 import gurobipy as gp
@@ -49,7 +51,7 @@ city_dist_combinations = {(c1, c2): distance(c1, c2) for c1, c2 in combinations(
 
 #swap city_dist_combinations for chosen set of cities later
 
-#### Model Creation ###
+#### Model Creation ####
 
 ## Base model ##
 
